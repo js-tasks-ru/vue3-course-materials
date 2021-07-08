@@ -1,0 +1,18 @@
+{
+  "name": "vue3-course-materials",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Материалы курса по Vue 3",
+  "author": "Grigorii K. Shartsev <g.shartsev@javascript.info>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "vue": "^3.1.4",
+    "serve": "^12.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-vue": "^7.13.0",
+    "prettier": "^2.3.2"
+  }
+}

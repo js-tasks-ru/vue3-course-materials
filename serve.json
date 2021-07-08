@@ -1,0 +1,16 @@
+{
+  "directoryListing": [
+    "0-*/**",
+    "1-*/**",
+    "."
+  ],
+  "unlisted": [
+    "assets",
+    "images",
+    "node_modules",
+    ".*",
+    "package*",
+    "README.md",
+    "serve.json"
+  ]
+}
