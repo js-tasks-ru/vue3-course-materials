@@ -1,9 +1,13 @@
 <template>
   <ul class="meetups-list">
     <li v-for="meetup in meetups" :key="meetup.id" class="meetups-list__item">
-      <a :href="`/meetups/${meetup.id}`" class="meetups-list__item-link" tabindex="0">
+      <router-link
+        :to="{ name: 'meetup', params: { meetupId: meetup.id } }"
+        class="meetups-list__item-link"
+        tabindex="0"
+      >
         <meetups-list-item :meetup="meetup" />
-      </a>
+      </router-link>
     </li>
   </ul>
 </template>
