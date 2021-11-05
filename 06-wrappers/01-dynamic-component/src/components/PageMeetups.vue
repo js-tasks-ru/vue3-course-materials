@@ -27,10 +27,7 @@
     </div>
 
     <template v-if="meetups">
-      <template v-if="filteredMeetups.length">
-        <meetups-list v-if="view === 'list'" :meetups="filteredMeetups" />
-        <meetups-calendar v-else-if="view === 'calendar'" :meetups="filteredMeetups" />
-      </template>
+      <component :is="viewComponent" v-if="filteredMeetups.length" :meetups="filteredMeetups" />
       <ui-alert v-else>Митапов по заданным условиям не найдено...</ui-alert>
     </template>
     <ui-alert v-else>Загрузка...</ui-alert>
@@ -58,8 +55,6 @@ export default {
 
   components: {
     UiIcon,
-    MeetupsList,
-    MeetupsCalendar,
     UiRadioGroup,
     UiButtonGroup,
     UiContainer,
@@ -103,6 +98,14 @@ export default {
           .includes(this.filter.search.toLowerCase());
 
       return this.meetups.filter((meetup) => dateFilter(meetup) && participationFilter(meetup) && searchFilter(meetup));
+    },
+
+    viewComponent() {
+      const viewToComponents = {
+        list: MeetupsList,
+        calendar: MeetupsCalendar,
+      };
+      return viewToComponents[this.view];
     },
   },
 

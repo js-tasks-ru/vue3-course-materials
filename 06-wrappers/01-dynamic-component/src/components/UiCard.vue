@@ -1,5 +1,5 @@
 <template>
-  <article class="card">
+  <component :is="tag" class="card">
     <div class="card__col">
       <div class="card__cover" :style="cover && `--bg-url: url('${cover}')`">
         <header>
@@ -12,7 +12,7 @@
         <slot />
       </div>
     </div>
-  </article>
+  </component>
 </template>
 
 <script>
@@ -20,6 +20,11 @@ export default {
   name: 'UiCard',
 
   props: {
+    tag: {
+      type: [String, Object, Function],
+      default: 'div',
+    },
+
     cover: {
       type: String,
     },

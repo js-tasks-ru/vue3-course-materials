@@ -1,15 +1,59 @@
 <template>
-  <div class="input-group">
-    <!--  <div class="input-group__icon"> -->
-    <!--    <slot name="left-icon" /> -->
-    <!--  </div> -->
-    <input class="form-control" />
+  <div
+    class="input-group"
+    :class="{
+      'input-group_icon': $slots['left-icon'],
+      'input-group_icon-left': $slots['left-icon'],
+    }"
+  >
+    <div v-if="$slots['left-icon']" class="input-group__icon">
+      <slot name="left-icon" />
+    </div>
+    <input ref="input" v-model="customModel" v-bind="$attrs" class="form-control" />
+    <!-- Или вместо customModel: -->
+    <!-- :value="modelValue"-->
+    <!-- @input="$emit('update:modelValue', $event.target.value)"-->
   </div>
 </template>
 
 <script>
 export default {
   name: 'UiInput',
+
+  inheritAttrs: false,
+
+  props: {
+    modelValue: {
+      type: String,
+    },
+  },
+
+  emits: {
+    'update:modelValue': null,
+  },
+
+  computed: {
+    // Не работает. $slots - не реактивный
+    // hasIcon() {
+    //   return !!this.$slots['left-icon'];
+    // },
+
+    customModel: {
+      get() {
+        return this.modelValue;
+      },
+
+      set(value) {
+        this.$emit('update:modelValue', value);
+      },
+    },
+  },
+
+  methods: {
+    focus() {
+      this.$refs['input'].focus();
+    },
+  },
 };
 </script>
 
