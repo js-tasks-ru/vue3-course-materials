@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UiInput should match snapshot 1`] = `
+<div
+  data-v-app=""
+>
+  <div
+    class="input-group"
+  >
+    <!--v-if-->
+    <input
+      class="form-control"
+    />
+    <!-- Или вместо customModel: -->
+    <!-- :value="modelValue"-->
+    <!-- @input="$emit('update:modelValue', $event.target.value)"-->
+  </div>
+</div>
+`;
