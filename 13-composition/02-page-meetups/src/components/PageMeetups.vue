@@ -2,7 +2,7 @@
   <ui-container>
     <div class="filters-panel">
       <div class="filters-panel__col">
-        <ui-radio-group v-model="filter.date" :options="$options.dateFilterOptions" name="date" />
+        <ui-radio-group v-model="filter.date" :options="dateFilterOptions" name="date" />
       </div>
 
       <div class="filters-panel__col">
@@ -42,16 +42,12 @@ import UiButtonGroup from '@/components/UiButtonGroup.vue';
 import UiContainer from '@/components/UiContainer.vue';
 import UiAlert from '@/components/UiAlert.vue';
 import UiIcon from './UiIcon.vue';
-import { fetchMeetups } from '@/api';
+import { useMeetupsFetch } from '../composables/useMeetupsFetch.js';
+import { useMeetupsFilter } from '../composables/useMeetupsFilter.js';
+import { computed, ref } from 'vue';
 
 export default {
   name: 'PageMeetups',
-
-  dateFilterOptions: [
-    { text: 'Все', value: 'all' },
-    { text: 'Прошедшие', value: 'past' },
-    { text: 'Ожидаемые', value: 'future' },
-  ],
 
   components: {
     UiIcon,
@@ -61,58 +57,28 @@ export default {
     UiAlert,
   },
 
-  data() {
-    return {
-      meetups: null,
+  setup() {
+    const { meetups } = useMeetupsFetch();
+    const { filteredMeetups, filter, dateFilterOptions } = useMeetupsFilter(meetups);
 
-      filter: {
-        date: 'all',
-        participation: 'all',
-        search: '',
-      },
+    const view = ref('list');
 
-      view: 'list',
-    };
-  },
-
-  computed: {
-    filteredMeetups() {
-      if (!this.meetups) {
-        return null;
-      }
-
-      const dateFilter = (meetup) =>
-        this.filter.date === 'all' ||
-        (this.filter.date === 'past' && new Date(meetup.date) <= new Date()) ||
-        (this.filter.date === 'future' && new Date(meetup.date) > new Date());
-
-      const participationFilter = (meetup) =>
-        this.filter.participation === 'all' ||
-        (this.filter.participation === 'organizing' && meetup.organizing) ||
-        (this.filter.participation === 'attending' && meetup.attending);
-
-      const searchFilter = (meetup) =>
-        [meetup.title, meetup.description, meetup.place, meetup.organizer]
-          .join(' ')
-          .toLowerCase()
-          .includes(this.filter.search.toLowerCase());
-
-      return this.meetups.filter((meetup) => dateFilter(meetup) && participationFilter(meetup) && searchFilter(meetup));
-    },
-
-    viewComponent() {
+    const viewComponent = computed(() => {
       const viewToComponents = {
         list: MeetupsList,
         calendar: MeetupsCalendar,
       };
-      return viewToComponents[this.view];
-    },
-  },
-
-  mounted() {
-    fetchMeetups().then((meetups) => {
-      this.meetups = meetups;
+      return viewToComponents[view.value];
     });
+
+    return {
+      meetups,
+      filter,
+      filteredMeetups,
+      dateFilterOptions,
+      view,
+      viewComponent,
+    };
   },
 };
 </script>

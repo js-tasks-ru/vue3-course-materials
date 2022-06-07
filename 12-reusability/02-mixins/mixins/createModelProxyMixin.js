@@ -1,4 +1,4 @@
-export const modelProxyMixin = (propName = 'modelValue') => ({
+export const createModelProxyMixin = (propName = 'modelValue') => ({
   computed: {
     [`${propName}Proxy`]: {
       get() {

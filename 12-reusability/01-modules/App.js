@@ -1,5 +1,6 @@
 import { defineComponent } from './vendor/vue.esm-browser.js';
 import UserForm from './UserForm.js';
+import { formatAsLocalDate, formatAsIsoDate } from './utils/dateFormatters.js';
 
 export default defineComponent({
   components: { UserForm },
@@ -15,17 +16,8 @@ export default defineComponent({
   },
 
   methods: {
-    formatAsLocalDate(timestamp) {
-      return new Date(timestamp).toLocaleDateString(navigator.language, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-    },
-
-    formatAsIsoDate(timestamp) {
-      return new Date(timestamp).toISOString().substr(0, 10);
-    },
+    formatAsLocalDate,
+    formatAsIsoDate,
   },
 
   template: `

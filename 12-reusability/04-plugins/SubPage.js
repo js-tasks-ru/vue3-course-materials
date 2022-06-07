@@ -1,5 +1,5 @@
 import { defineComponent } from './vendor/vue.esm-browser.js';
-import { TOASTER_KEY } from './toaster/index.js';
+import { TOASTER_KEY } from './plugins/toaster/index.js';
 
 export default defineComponent({
   name: 'SubPage',
@@ -11,6 +11,8 @@ export default defineComponent({
   methods: {
     toast() {
       this.toaster.toast('Toast');
+      // this.$toast() from mixin
+      // this.$toaster.toast() from globalProperties
     },
   },
 

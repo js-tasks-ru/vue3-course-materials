@@ -1,7 +1,7 @@
 const deepEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
 
-export function localPropMixin(propName, { propOptions, localName }) {
+export function createLocalPropMixin(propName, { propOptions, localName }) {
   const localPropName = localName ?? `${propName}Local`;
 
   return {

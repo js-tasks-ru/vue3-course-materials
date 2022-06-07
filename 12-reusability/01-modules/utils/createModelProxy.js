@@ -1,4 +1,4 @@
-export const modelProxy = (propName = 'modelValue') => ({
+export const createModelProxy = (propName = 'modelValue') => ({
   get() {
     return this[propName];
   },
