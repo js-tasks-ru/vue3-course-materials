@@ -6,13 +6,14 @@
   "author": "Grigorii K. Shartsev <g.shartsev@javascript.info>",
   "license": "UNLICENSED",
   "dependencies": {
-    "vue": "^3.1.4",
-    "serve": "^12.0.0"
+    "serve": "^12.0.0",
+    "vue": "^3.1.4"
   },
   "devDependencies": {
-    "eslint": "^7.30.0",
+    "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-vue": "^7.13.0",
-    "prettier": "^2.3.2"
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.7.1",
+    "prettier": "^2.6.2"
   }
 }

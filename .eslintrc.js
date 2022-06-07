@@ -6,7 +6,8 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    es2020: true,
+    es2021: true,
+    'vue/setup-compiler-macros': true,
   },
 
   extends: ['plugin:vue/vue3-essential', 'eslint:recommended', 'prettier'],
@@ -14,17 +15,20 @@ module.exports = {
   parserOptions: {
     parser: 'espree',
     ecmaVersion: 2021,
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
 
   rules: {
     // Basic
-    'no-unused-vars': 'off', // For task start code
-    'no-console': 'warn',
-    'no-debugger': 'warn',
+    'no-unused-vars': 'off',
+    'no-console': 'off',
+    'no-debugger': 'off',
     'no-var': 'error',
     // Vue / Priority A: Essential Essential
-    'vue/no-unused-components': 'off', // For task start code
-    'vue/valid-template-root': 'off', // For task start code
+    'vue/no-unused-components': 'off',
+    'vue/valid-template-root': 'off',
     // Vue / Priority B: Strongly Recommended
     'vue/v-bind-style': 'error',
     'vue/v-on-style': 'error',
@@ -49,7 +53,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ['**/__tests__/*.js?(x)'],
+      files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
       env: {
         jest: true,
       },
