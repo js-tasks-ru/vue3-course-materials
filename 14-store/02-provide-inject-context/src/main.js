@@ -4,6 +4,8 @@ import './assets/styles/_form.css';
 import './assets/styles/_input-group.css';
 import './assets/styles/_page-auth.css';
 import { createApp } from 'vue';
-import App from './App.vue';
+import RootApp from './RootApp.vue';
 
-createApp(App).mount('#app');
+const app = createApp(RootApp);
+app.config.unwrapInjectedRef = true;
+app.mount('#app');

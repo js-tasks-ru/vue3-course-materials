@@ -6,10 +6,12 @@
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia';
 import PageLogin from './components/PageLogin.vue';
+import { useAuthStore } from './stores/useAuthStore.js';
 
-const user = null;
-const isAuthenticated = false;
+const authStore = useAuthStore();
+const { user, isAuthenticated } = storeToRefs(authStore);
 </script>
 
 <style>

@@ -15,10 +15,7 @@ export default {
     PageLogin,
   },
 
-  computed: {
-    user() {},
-    isAuthenticated() {},
-  },
+  inject: ['user', 'isAuthenticated'],
 };
 </script>
 

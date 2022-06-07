@@ -6,10 +6,14 @@
 </template>
 
 <script setup>
+import { useStore } from 'vuex';
 import PageLogin from './components/PageLogin.vue';
+import { computed } from 'vue';
 
-const user = null;
-const isAuthenticated = false;
+const store = useStore();
+
+const user = computed(() => store.state.auth.user);
+const isAuthenticated = computed(() => store.getters['auth/IS_AUTHENTICATED']);
 </script>
 
 <style>

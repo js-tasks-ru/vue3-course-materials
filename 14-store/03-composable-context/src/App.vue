@@ -7,9 +7,9 @@
 
 <script setup>
 import PageLogin from './components/PageLogin.vue';
-import { useAuth } from './composables/useAuth.js';
+import { useAuthProvider } from './composables/useAuth.js';
 
-const { user, isAuthenticated } = useAuth();
+const { user, isAuthenticated } = useAuthProvider();
 </script>
 
 <style>

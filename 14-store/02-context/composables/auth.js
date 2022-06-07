@@ -1,4 +1,4 @@
-import { ref, readonly, computed, provide, inject } from 'vue';
+import { ref, readonly, computed, provide, inject } from '../vendor/vue.esm-browser.js';
 import { loginWithApi } from '../api.js';
 
 const AUTH_KEY = Symbol('AUTH_KEY');
@@ -8,24 +8,17 @@ export function useAuthProvider() {
 
   const isAuthenticated = computed(() => !!user.value);
 
-  const setUser = (value) => (user.value = value);
-
   function login(email, password) {
-    return loginWithApi(email, password).then((user) => {
-      setUser(user);
+    return loginWithApi(email, password).then((userResponse) => {
+      user.value = userResponse;
     });
   }
 
-  const provided = {
+  provide(AUTH_KEY, {
     user: readonly(user),
     isAuthenticated,
-    setUser,
     login,
-  };
-
-  provide(AUTH_KEY, provided);
-
-  return provided;
+  });
 }
 
 export function useAuthContext() {

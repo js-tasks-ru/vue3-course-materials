@@ -5,26 +5,11 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import PageLogin from './components/PageLogin.vue';
+import { useAuth } from './composables/useAuth.js';
 
-export default {
-  name: 'App',
-
-  components: {
-    PageLogin,
-  },
-
-  setup() {
-    const user = null;
-    const isAuthenticated = false;
-
-    return {
-      user,
-      isAuthenticated,
-    };
-  },
-};
+const { user, isAuthenticated } = useAuth();
 </script>
 
 <style>

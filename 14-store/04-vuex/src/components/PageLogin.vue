@@ -24,8 +24,13 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 const email = ref('demo@email');
 const password = ref('password');
-const handleSubmit = () => {};
+const handleSubmit = () => {
+  store.dispatch('auth/LOGIN', { email: email.value, password: password.value }).catch((err) => err.message);
+};
 </script>
