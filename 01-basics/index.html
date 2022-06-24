@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="/assets/styles/index.css" />
+    <style>
+      /* Скроем шаблон из DOM, пока вместо него не смонтируется Vue приложение */
+      [v-cloak] {
+        display: none;
+      }
+    </style>
     <title></title>
   </head>
   <body>
@@ -20,19 +26,30 @@
         </nav>
       </header>
 
-      <main id="app" class="main">
+      <main id="app" class="main" v-cloak>
         <div class="container">
+          <!-- v-html - определяет HTML содержимое элемента (без экранирования)  -->
+          <div v-html="hello"></div>
+          <!-- v-text - определяется текстовое содержимое элемента (как текстовая интерполяция с {{ }}) -->
+          <div v-text="hello"></div>
+          <!-- v-pre - говорит Vue о том, что содержимое не надо интерпретировать, как шаблон. Оно останется, как есть -->
+          <div v-pre>{{ meetups }}</div>
+
           <div class="filters-panel">
             <div class="filters-panel__col">
               <div class="radio-group">
                 <div class="radio-group__button">
+                  <!-- Двустороннее связывание радиокнопки со свойством в приложении -->
+                  <!-- v-model на радио определяет свойство checked и обновляется событием change -->
+                  <!-- :checked="filter.date === 'all'"-->
+                  <!-- @change="filter.date = $event.target.value"-->
                   <input
                     id="radio-buttons_date_all"
                     class="radio-group__input"
                     type="radio"
                     name="date"
                     value="all"
-                    checked
+                    v-model="filter.date"
                   />
                   <label for="radio-buttons_date_all" class="radio-group__label">Все</label>
                 </div>
@@ -43,6 +60,7 @@
                     type="radio"
                     name="date"
                     value="past"
+                    v-model="filter.date"
                   />
                   <label for="radio-buttons_date_future" class="radio-group__label">Прошедшие</label>
                 </div>
@@ -53,6 +71,7 @@
                     type="radio"
                     name="date"
                     value="future"
+                    v-model="filter.date"
                   />
                   <label for="radio-buttons_date_past" class="radio-group__label">Ожидаемые</label>
                 </div>
@@ -65,12 +84,28 @@
                   <div class="input-group__icon">
                     <img class="icon" src="/assets/icons/icon-search.svg" alt="search" />
                   </div>
-                  <input class="form-control form-control_rounded form-control_sm" placeholder="Поиск" type="search" />
+                  <!-- Модификатор модели trim удаляет пробелы из начала и конца -->
+                  <input
+                    class="form-control form-control_rounded form-control_sm"
+                    placeholder="Поиск"
+                    type="search"
+                    v-model.trim="filter.search"
+                  />
                 </div>
               </div>
               <div class="form-group form-group_inline">
                 <div class="button-group" role="group">
-                  <button type="button" class="button-group__button button-group__button_active">
+                  <!-- Динамическое привязывание классов можно смешивать со статическим описанием классов -->
+                  <!-- При этом классы можно привязывать не только строкой, как в HTML, но и массивом классов, -->
+                  <!-- а также объектом классов с условиями их добавления -->
+                  <button
+                    type="button"
+                    class="button-group__button"
+                    :class="{ 'button-group__button_active': view === 'list' }"
+                    aria-label="Meetups List"
+                    :aria-selected="view === 'list'"
+                    @click="view = 'list'"
+                  >
                     <svg fill="none" height="28" viewBox="0 0 28 28" width="28" xmlns="http://www.w3.org/2000/svg">
                       <path
                         clip-rule="evenodd"
@@ -79,7 +114,14 @@
                       ></path>
                     </svg>
                   </button>
-                  <button type="button" class="button-group__button" aria-label="Calendar">
+                  <button
+                    type="button"
+                    class="button-group__button"
+                    :class="{ 'button-group__button_active': view === 'calendar' }"
+                    aria-label="Meetups Calendar"
+                    :aria-selected="view === 'calendar'"
+                    @click="view = 'calendar'"
+                  >
                     <svg height="22" viewBox="0 0 20 22" width="20" xmlns="http://www.w3.org/2000/svg">
                       <path
                         clip-rule="evenodd"
@@ -93,44 +135,54 @@
             </div>
           </div>
 
-          <ul class="meetups-list">
-            <li class="meetups-list__item">
-              <a href="/meetups/1" class="meetups-list__item-link" tabindex="0">
-                <article class="meetup-card card">
-                  <div class="card__col">
-                    <div class="card__cover" style="--bg-url: url('https://course-vue.javascript.ru/api/images/1')">
-                      <header>Заголовок митапа</header>
-                    </div>
-                  </div>
-                  <div class="card__col">
-                    <div class="card__content">
-                      <span class="meetup-card__badge badge badge_success">Организую</span>
-                      <!-- <span class="meetup-card__badge badge badge_primary">Участвую</span>-->
-                      <ul class="meetup-info">
-                        <li class="meetup-info__item">
-                          <img class="meetup-info__icon icon" src="/assets/icons/icon-user.svg" alt="user" />
-                          Организатор
-                        </li>
-                        <li class="meetup-info__item">
-                          <img class="meetup-info__icon icon" src="/assets/icons/icon-map.svg" alt="map" />
-                          Место проведения
-                        </li>
-                        <li class="meetup-info__item">
-                          <img class="meetup-info__icon icon" src="/assets/icons/icon-cal-lg.svg" alt="cal-lg" />
-                          <time datetime="2021-01-01">01 янв. 2021</time>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </article>
-              </a>
-            </li>
-          </ul>
-
-          <div class="meetups-calendar">Календарь</div>
-
-          <div class="alert">Загрузка...</div>
-          <div class="alert">Митапов по заданным условиям не найдено...</div>
+          <!-- Если требуется по какому-то условию выводить несколько узлов, а не один конкретный, можно использовать <template> -->
+          <!-- Также работает с v-for -->
+          <!-- Выводим митапы и вообще обращаемся к отфильтрованному списку митапов для его первого вычисления только,
+         когда митапы уже получены
+      -->
+          <template v-if="meetups">
+            <template v-if="filteredMeetups.length">
+              <ul v-if="view === 'list'" class="meetups-list">
+                <li v-for="meetup in filteredMeetups" :key="meetup.id" class="meetups-list__item">
+                  <a :href="`/meetups/${meetup.id}`" class="meetups-list__item-link" tabindex="0">
+                    <article class="meetup-card card">
+                      <div class="card__col">
+                        <!-- Как и с классами, style можно смешивать статически и динамический -->
+                        <!-- А также описывать массив стилей и объект стилей -->
+                        <div class="card__cover" :style="meetup.image && { '--bg-url': `url(${meetup.image})` }">
+                          <!-- Текстовая интерполяция позволяет выводить значения выражения строкой (безопасно, с экранированием) -->
+                          <header>{{ meetup.title }}</header>
+                        </div>
+                      </div>
+                      <div class="card__col">
+                        <div class="card__content">
+                          <span v-if="meetup.organizing" class="meetup-card__badge badge badge_success">Организую</span>
+                          <span v-if="meetup.attending" class="meetup-card__badge badge badge_primary">Участвую</span>
+                          <ul class="meetup-info">
+                            <li class="meetup-info__item">
+                              <img class="meetup-info__icon icon" src="/assets/icons/icon-user.svg" alt="user" />
+                              {{ meetup.organizer }}
+                            </li>
+                            <li class="meetup-info__item">
+                              <img class="meetup-info__icon icon" src="/assets/icons/icon-map.svg" alt="map" />
+                              {{ meetup.place }}
+                            </li>
+                            <li class="meetup-info__item">
+                              <img class="meetup-info__icon icon" src="/assets/icons/icon-cal-lg.svg" alt="cal-lg" />
+                              <time :datetime="formatAsIsoDate(meetup.date)">{{ formatAsLocalDate(meetup.date) }}</time>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </article>
+                  </a>
+                </li>
+              </ul>
+              <div v-else-if="view === 'calendar'" class="meetups-calendar">Календарь</div>
+            </template>
+            <div v-else class="alert">Митапов по заданным условиям не найдено...</div>
+          </template>
+          <div v-else class="alert">Загрузка...</div>
         </div>
       </main>
 
