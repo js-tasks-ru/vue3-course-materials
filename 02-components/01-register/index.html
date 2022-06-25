@@ -5,45 +5,40 @@
     <title></title>
   </head>
   <body>
-    <main id="app">
-      <div @click="isWorking = !isWorking">{{ time }}</div>
-    </main>
+    <main id="app"></main>
 
     <script type="module">
-      import { createApp, defineComponent } from './vendor/vue.esm-browser.js';
+      import { createApp, defineAsyncComponent } from './vendor/vue.esm-browser.js';
+      import VClock from './VClock.js';
 
-      const Clock = defineComponent({
-        name: 'Clock',
-
-        data() {
-          return {
-            time: '',
-            intervalId: null,
-            isWorking: true,
-          };
+      const app = createApp({
+        // При локальной регистрации компонент доступен там, где он непосредственно зарегистрирован
+        components: {
+          // Обычно регистрируют под собственным именем
+          VClock,
+          // Возможна регистрация и под другим именем
+          VClock2: VClock,
+          // Возможна асинхронная регистрация компонента с функцией получения компонента
+          // Динамический импорт возвращает Promise с модулем с компонентом
+          VClockAsync: defineAsyncComponent(() => import('./VClock.js')),
         },
 
-        created() {
-          this.updateTime();
-          this.intervalId = setInterval(() => {
-            this.updateTime();
-          }, 1000);
-        },
-
-        beforeUnmount() {
-          clearInterval(this.intervalId);
-        },
-
-        methods: {
-          updateTime() {
-            if (this.isWorking) {
-              this.time = new Date().toLocaleTimeString();
-            }
-          },
-        },
+        // В шаблоне создавать и рендерить экземпляры дочерних компонентов можно также в синтаксисе HTML элементов
+        // Имя тега - имя, под которым зарегистрирован компонент
+        template: `
+          <div>
+            <v-clock />
+            <v-clock-2 />
+            <v-clock-global />
+            <v-clock-async />
+          </div>
+        `,
       });
 
-      const vm = createApp(Clock).mount('#app');
+      // При глобальной регистрации компонент регистрируется во ВСЕХ компонентах приложения на любом уровне вложенности
+      app.component('v-clock-global', VClock);
+
+      const vm = app.mount('#app');
     </script>
   </body>
 </html>
