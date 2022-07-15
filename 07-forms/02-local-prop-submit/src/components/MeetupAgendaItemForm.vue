@@ -5,7 +5,7 @@
     </button>
 
     <div class="form-group">
-      <select v-model="agendaItem.type" title="Тип">
+      <select v-model="localAgendaItem.type" title="Тип">
         <option value="other">Другое</option>
       </select>
     </div>
@@ -15,7 +15,7 @@
         <div class="form-group">
           <label class="form-group__label">Начало</label>
           <div class="input-group">
-            <input v-model="agendaItem.startsAt" class="form-control" type="time" placeholder="00:00" />
+            <input v-model="localAgendaItem.startsAt" class="form-control" type="time" placeholder="00:00" />
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
         <div class="form-group">
           <label class="form-group__label">Окончание</label>
           <div class="input-group">
-            <input v-model="agendaItem.endsAt" class="form-control" type="time" placeholder="00:00" />
+            <input v-model="localAgendaItem.endsAt" class="form-control" type="time" placeholder="00:00" />
           </div>
         </div>
       </div>
@@ -32,14 +32,18 @@
     <div class="form-group">
       <label class="form-group__label">Заголовок</label>
       <div class="input-group">
-        <input v-model="agendaItem.title" class="form-control" />
+        <input v-model="localAgendaItem.title" class="form-control" />
       </div>
     </div>
     <div class="form-group">
       <label class="form-group__label">Описание</label>
       <div class="input-group">
-        <textarea v-model="agendaItem.description" class="form-control"></textarea>
+        <textarea v-model="localAgendaItem.description" class="form-control"></textarea>
       </div>
+    </div>
+
+    <div class="form-group">
+      <button type="button" @click="save">Save</button>
     </div>
   </div>
 </template>
@@ -58,6 +62,20 @@ export default {
     agendaItem: {
       type: Object,
       required: true,
+    },
+  },
+
+  emits: ['remove', 'save'],
+
+  data() {
+    return {
+      localAgendaItem: { ...this.agendaItem },
+    };
+  },
+
+  methods: {
+    save() {
+      this.$emit('save', { ...this.localAgendaItem });
     },
   },
 };

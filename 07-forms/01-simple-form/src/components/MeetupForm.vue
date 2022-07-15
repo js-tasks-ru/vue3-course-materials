@@ -5,22 +5,30 @@
         <div class="form-group">
           <label class="form-group__label">Название</label>
           <div class="input-group">
-            <input class="form-control" />
+            <input v-model="meetup.title" class="form-control" />
           </div>
         </div>
         <div class="form-group">
           <label class="form-group__label">Место проведения</label>
           <div class="input-group">
-            <input class="form-control" />
+            <input v-model="meetup.place" class="form-control" />
           </div>
         </div>
       </fieldset>
 
       <h3 class="meetup-form__agenda-title">Программа</h3>
-      <MeetupAgendaItemForm class="meetup-form__agenda-item" />
+      <meetup-agenda-item-form
+        v-for="(agendaItem, index) in meetup.agenda"
+        :key="agendaItem.id"
+        :agenda-item="agendaItem"
+        class="meetup-form__agenda-item"
+        @remove="removeAgendaItem(index)"
+      />
 
       <div class="meetup-form__append">
-        <button class="meetup-form__append-button" type="button">+ Добавить пункт программы</button>
+        <button class="meetup-form__append-button" type="button" @click="addAgendaItem">
+          + Добавить пункт программы
+        </button>
       </div>
     </div>
 
@@ -58,7 +66,23 @@ export default {
     MeetupAgendaItemForm,
   },
 
-  methods: {},
+  props: {
+    meetup: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  methods: {
+    addAgendaItem() {
+      const newItem = createAgendaItem();
+      this.meetup.agenda.push(newItem);
+    },
+
+    removeAgendaItem(index) {
+      this.meetup.agenda.splice(index, 1);
+    },
+  },
 };
 </script>
 
