@@ -43,6 +43,7 @@
 
 <script>
 import { klona } from 'klona';
+import { dequal } from 'dequal';
 import MeetupAgendaItemForm from './MeetupAgendaItemForm.vue';
 
 // Use negative IDs, so it won't conflict with real id
@@ -78,11 +79,21 @@ export default {
 
   data() {
     return {
-      localMeetup: klona(this.meetup),
+      localMeetup: undefined,
     };
   },
 
   watch: {
+    meetup: {
+      deep: true,
+      immediate: true,
+      handler() {
+        if (!dequal(this.localMeetup, this.meetup)) {
+          this.localMeetup = klona(this.meetup);
+        }
+      },
+    },
+
     localMeetup: {
       deep: true,
       handler() {
