@@ -1,28 +1,29 @@
 <template>
-  <form class="meetup-form">
+  <form class="meetup-form" @submit.prevent="handleSubmit">
     <div class="meetup-form__content">
       <fieldset class="meetup-form__section">
         <div class="form-group">
           <label class="form-group__label">Название</label>
           <div class="input-group">
-            <input v-model="meetup.title" class="form-control" />
+            <input v-model="localMeetup.title" class="form-control" />
           </div>
         </div>
         <div class="form-group">
           <label class="form-group__label">Место проведения</label>
           <div class="input-group">
-            <input v-model="meetup.place" class="form-control" />
+            <input v-model="localMeetup.place" class="form-control" />
           </div>
         </div>
       </fieldset>
 
       <h3 class="meetup-form__agenda-title">Программа</h3>
       <meetup-agenda-item-form
-        v-for="(agendaItem, index) in meetup.agenda"
+        v-for="(agendaItem, index) in localMeetup.agenda"
         :key="agendaItem.id"
-        :agenda-item="agendaItem"
+        :agenda-item="localMeetup.agenda[index]"
         class="meetup-form__agenda-item"
         @remove="removeAgendaItem(index)"
+        @save="localMeetup.agenda[index] = $event"
       />
 
       <div class="meetup-form__append">
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+import { klona } from 'klona';
 import MeetupAgendaItemForm from './MeetupAgendaItemForm.vue';
 
 // Use negative IDs, so it won't conflict with real id
@@ -73,14 +75,26 @@ export default {
     },
   },
 
+  emits: ['submit'],
+
+  data() {
+    return {
+      localMeetup: klona(this.meetup),
+    };
+  },
+
   methods: {
     addAgendaItem() {
       const newItem = createAgendaItem();
-      this.meetup.agenda.push(newItem);
+      this.localMeetup.agenda.push(newItem);
     },
 
     removeAgendaItem(index) {
-      this.meetup.agenda.splice(index, 1);
+      this.localMeetup.agenda.splice(index, 1);
+    },
+
+    handleSubmit() {
+      this.$emit('submit', klona(this.localMeetup));
     },
   },
 };

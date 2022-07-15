@@ -1,6 +1,6 @@
 <template>
   <UiContainer class="page-meetup-form">
-    <MeetupForm />
+    <MeetupForm :meetup="meetup" />
     <hr />
     <button @click="updateMeetup">Update Meetup</button>
     <pre><code>{{ meetup }}</code></pre>

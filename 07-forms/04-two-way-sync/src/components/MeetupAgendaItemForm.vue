@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { dequal } from 'dequal';
 import UiIcon from './UiIcon.vue';
 
 export default {
@@ -70,6 +71,16 @@ export default {
   },
 
   watch: {
+    agendaItem: {
+      deep: true,
+      immediate: true,
+      handler() {
+        if (!dequal(this.localAgendaItem, this.agendaItem)) {
+          this.localAgendaItem = { ...this.agendaItem };
+        }
+      },
+    },
+
     localAgendaItem: {
       deep: true,
       handler() {

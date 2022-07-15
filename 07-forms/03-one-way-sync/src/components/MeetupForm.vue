@@ -1,5 +1,5 @@
 <template>
-  <form class="meetup-form" @submit.prevent="handleSubmit">
+  <form class="meetup-form">
     <div class="meetup-form__content">
       <fieldset class="meetup-form__section">
         <div class="form-group">
@@ -20,10 +20,9 @@
       <meetup-agenda-item-form
         v-for="(agendaItem, index) in localMeetup.agenda"
         :key="agendaItem.id"
-        :agenda-item="localMeetup.agenda[index]"
+        v-model:agenda-item="localMeetup.agenda[index]"
         class="meetup-form__agenda-item"
         @remove="removeAgendaItem(index)"
-        @save="localMeetup.agenda[index] = $event"
       />
 
       <div class="meetup-form__append">
@@ -75,12 +74,21 @@ export default {
     },
   },
 
-  emits: ['submit'],
+  emits: ['update:meetup'],
 
   data() {
     return {
       localMeetup: klona(this.meetup),
     };
+  },
+
+  watch: {
+    localMeetup: {
+      deep: true,
+      handler() {
+        this.$emit('update:meetup', klona(this.localMeetup));
+      },
+    },
   },
 
   methods: {
@@ -91,10 +99,6 @@ export default {
 
     removeAgendaItem(index) {
       this.localMeetup.agenda.splice(index, 1);
-    },
-
-    handleSubmit() {
-      this.$emit('submit', klona(this.localMeetup));
     },
   },
 };

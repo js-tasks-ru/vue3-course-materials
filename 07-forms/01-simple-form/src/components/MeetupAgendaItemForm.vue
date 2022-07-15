@@ -1,11 +1,11 @@
 <template>
   <div class="agenda-item-form">
-    <button type="button" class="agenda-item-form__remove-button">
+    <button type="button" class="agenda-item-form__remove-button" @click="$emit('remove')">
       <UiIcon icon="trash" />
     </button>
 
     <div class="form-group">
-      <select title="Тип">
+      <select v-model="agendaItem.type" title="Тип">
         <option value="other">Другое</option>
       </select>
     </div>
@@ -15,7 +15,7 @@
         <div class="form-group">
           <label class="form-group__label">Начало</label>
           <div class="input-group">
-            <input class="form-control" type="time" placeholder="00:00" />
+            <input v-model="agendaItem.startsAt" class="form-control" type="time" placeholder="00:00" />
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
         <div class="form-group">
           <label class="form-group__label">Окончание</label>
           <div class="input-group">
-            <input class="form-control" type="time" placeholder="00:00" />
+            <input v-model="agendaItem.endsAt" class="form-control" type="time" placeholder="00:00" />
           </div>
         </div>
       </div>
@@ -32,13 +32,13 @@
     <div class="form-group">
       <label class="form-group__label">Заголовок</label>
       <div class="input-group">
-        <input class="form-control" />
+        <input v-model="agendaItem.title" class="form-control" />
       </div>
     </div>
     <div class="form-group">
       <label class="form-group__label">Описание</label>
       <div class="input-group">
-        <textarea class="form-control"></textarea>
+        <textarea v-model="agendaItem.description" class="form-control"></textarea>
       </div>
     </div>
   </div>
@@ -52,6 +52,13 @@ export default {
 
   components: {
     UiIcon,
+  },
+
+  props: {
+    agendaItem: {
+      type: Object,
+      required: true,
+    },
   },
 };
 </script>
