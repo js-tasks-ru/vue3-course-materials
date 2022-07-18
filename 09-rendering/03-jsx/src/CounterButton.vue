@@ -2,9 +2,7 @@
   <button @click="$emit('update:count', count + 1)">{{ count }}</button>
 </template>-->
 
-<script>
-import { h } from 'vue';
-
+<script lang="jsx">
 export default {
   name: 'CounterButton',
 
@@ -18,13 +16,14 @@ export default {
 
   render() {
     // <button @click="$emit('update:count', count + 1)">{{ count }}</button>
-    return h(
-      'button',
-      {
-        onClick: () => this.$emit('update:count', this.count + 1),
-      },
-      this.count,
-    );
+    // return h(
+    //   'button',
+    //   {
+    //     onClick: () => this.$emit('update:count', this.count + 1),
+    //   },
+    //   this.count,
+    // );
+    return <button onClick={() => this.$emit('update:count', this.count + 1)}>{this.count}</button>;
   },
 };
 </script>

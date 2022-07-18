@@ -1,9 +1,16 @@
-<template>
+<!--<template>
   <div>TextDiv</div>
-</template>
+</template>-->
 
 <script>
+import { h } from 'vue';
+
 export default {
   name: 'TextDiv',
+
+  render() {
+    // <div>TextDiv</div>
+    return h('div', 'TextDiv');
+  },
 };
 </script>

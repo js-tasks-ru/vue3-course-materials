@@ -2,15 +2,13 @@
   <div>TextDiv</div>
 </template>-->
 
-<script>
-import { h } from 'vue';
-
+<script lang="jsx">
 export default {
   name: 'TextDiv',
 
   render() {
-    // <div>TextDiv</div>
-    return h('div', 'TextDiv');
+    // return h('div', 'TextDiv');
+    return <div>TextDiv</div>;
   },
 };
 </script>

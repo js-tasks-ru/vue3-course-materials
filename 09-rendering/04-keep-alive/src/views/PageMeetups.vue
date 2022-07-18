@@ -27,7 +27,9 @@
     </div>
 
     <template v-if="meetups">
-      <component :is="viewComponent" v-if="filteredMeetups.length" :meetups="filteredMeetups" />
+      <keep-alive v-if="filteredMeetups.length" include="MeetupsCalendar">
+        <component :is="viewComponent" :meetups="filteredMeetups" />
+      </keep-alive>
       <ui-alert v-else>Митапов по заданным условиям не найдено...</ui-alert>
     </template>
     <ui-alert v-else>Загрузка...</ui-alert>
