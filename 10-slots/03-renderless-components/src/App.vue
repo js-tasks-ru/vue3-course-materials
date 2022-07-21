@@ -1,7 +1,7 @@
 <template>
-  <list-view v-slot="{ item, index, onRemove }" v-model:items="list">
-    <p>
-      <button type="button" @click="onRemove">{{ index }}: {{ item.name }}</button>
+  <list-view v-slot="{ items, onRemove }" v-model:items="list">
+    <p v-for="(item, index) in items">
+      <button type="button" @click="onRemove(index)">{{ index }}: {{ item.name }}</button>
     </p>
   </list-view>
 </template>

@@ -1,4 +1,12 @@
-<script lang="jsx">
+<template>
+  <list-view v-slot="{ item, index, onRemove }" v-model:items="list">
+    <p>
+      <button type="button" @click="onRemove">{{ index }}: {{ item.name }}</button>
+    </p>
+  </list-view>
+</template>
+
+<script>
 import ListView from './components/ListView.vue';
 
 export default {
@@ -19,15 +27,6 @@ export default {
         },
       ],
     };
-  },
-
-  render() {
-    const renderItem = ({ item, index, remove }) => (
-      <button type="button" onClick={() => remove()}>
-        {`${index}: ${item.name}`}
-      </button>
-    );
-    return <ListView v-model={[this.list, 'items']} renderItem={renderItem} />;
   },
 };
 </script>
