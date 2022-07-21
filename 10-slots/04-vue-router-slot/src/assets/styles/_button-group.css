@@ -1,0 +1,52 @@
+.button-group {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  width: 96px;
+}
+
+.button-group__button {
+  height: 44px;
+  width: 48px;
+  border: 2px solid var(--blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition-duration: 0.3s;
+  transition-property: background-color, fill;
+  background-color: var(--white);
+  box-shadow: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.button-group__button:first-child {
+  border-radius: 22px 0 0 22px;
+  padding-left: 2px;
+}
+
+.button-group__button:last-child {
+  border-radius: 0 22px 22px 0;
+  padding-right: 2px;
+}
+
+.button-group__button.button-group__button_active {
+  background-color: var(--blue);
+}
+
+.button-group__button svg,
+.button-group__button svg {
+  fill: var(--blue);
+}
+
+.button-group__button:hover,
+.button-group__button.button-group__button_active {
+  background-color: var(--blue);
+}
+
+.button-group__button:hover svg,
+.button-group__button.button-group__button_active svg {
+  fill: var(--white);
+}

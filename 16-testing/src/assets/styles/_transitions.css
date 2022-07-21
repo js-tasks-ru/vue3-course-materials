@@ -1,0 +1,37 @@
+/* Transition, name=fade */
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Transition Group, name=fade-list */
+
+.fade-list {
+  position: relative;
+}
+
+.fade-list > * {
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+.fade-list > .fade-list-leave-active {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+}
+
+.fade-list > .fade-list-enter-from,
+.fade-list > .fade-list-leave-to {
+  opacity: 0;
+}
+
+.fade-list > .fade-list-move {
+  transition: transform 0.3s;
+}

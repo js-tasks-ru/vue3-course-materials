@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+  </head>
+  <body>
+    <main id="app">
+      <div @click="isWorking = !isWorking">{{ time }}</div>
+    </main>
+
+    <script type="module">
+      import { createApp, defineComponent } from './vendor/vue.esm-browser.js';
+
+      const Clock = defineComponent({
+        name: 'Clock',
+
+        data() {
+          return {
+            time: '',
+            intervalId: null,
+            isWorking: true,
+          };
+        },
+
+        created() {
+          this.updateTime();
+          this.intervalId = setInterval(() => {
+            this.updateTime();
+          }, 1000);
+        },
+
+        beforeUnmount() {
+          clearInterval(this.intervalId);
+        },
+
+        methods: {
+          updateTime() {
+            if (this.isWorking) {
+              this.time = new Date().toLocaleTimeString();
+            }
+          },
+        },
+      });
+
+      const vm = createApp(Clock).mount('#app');
+    </script>
+  </body>
+</html>
