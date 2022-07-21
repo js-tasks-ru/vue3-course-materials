@@ -11,7 +11,9 @@ export default defineComponent({
       this.$refs['localToaster'].toast('Toast');
     },
 
-    busToast() {},
+    rootToast() {
+      this.$root.toast('Root Toast');
+    },
   },
 
   template: `
@@ -24,6 +26,6 @@ export default defineComponent({
     >
       <the-toaster ref="localToaster" />
       <button @click="localToast">Local Toast</button>
-      <button @click="busToast">Event Bus Toast</button>
+      <button @click="rootToast">Root Toast</button>
     </div>`,
 });

@@ -1,16 +1,16 @@
 import { defineComponent } from './vendor/vue.esm-browser.js';
-import IndexPage from './IndexPage.js';
 import TheToaster from './TheToaster.js';
 
 export default defineComponent({
-  name: 'App',
+  components: { TheToaster },
 
-  components: {
-    IndexPage,
-    TheToaster,
+  provide() {
+    return {
+      toaster: {
+        toast: this.toast,
+      },
+    };
   },
-
-  expose: ['toast'],
 
   methods: {
     toast(message) {
@@ -19,9 +19,7 @@ export default defineComponent({
   },
 
   template: `
-    <div class="container">
-      <index-page />
-    </div>
+    <slot />
     <the-toaster ref="toaster" />
   `,
 });

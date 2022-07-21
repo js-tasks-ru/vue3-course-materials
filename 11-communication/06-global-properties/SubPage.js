@@ -1,6 +1,5 @@
 import { defineComponent } from './vendor/vue.esm-browser.js';
 import TheToaster from './TheToaster.js';
-import { toaster } from './toaster.js';
 
 export default defineComponent({
   name: 'SubPage',
@@ -12,8 +11,8 @@ export default defineComponent({
       this.$refs['localToaster'].toast('Toast');
     },
 
-    instanceToast() {
-      toaster.toast('Toast');
+    globalToast() {
+      this.$toaster.toast('Global Toast');
     },
   },
 
@@ -21,6 +20,6 @@ export default defineComponent({
     <div class="sub-page">
       <the-toaster ref="localToaster" />
       <button @click="localToast">Local Toast</button>
-      <button @click="instanceToast">Instance Toast</button>
+      <button @click="globalToast">Global Toast</button>
     </div>`,
 });

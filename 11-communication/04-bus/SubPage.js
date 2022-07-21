@@ -1,5 +1,6 @@
 import { defineComponent } from './vendor/vue.esm-browser.js';
 import TheToaster from './TheToaster.js';
+import { eventBus } from './eventBus.js';
 
 export default defineComponent({
   name: 'SubPage',
@@ -12,7 +13,7 @@ export default defineComponent({
     },
 
     eventBusToast() {
-      this.$root.toast('Root Toast');
+      eventBus.emit('toaster:toast', 'Event Bus Toast');
     },
   },
 
