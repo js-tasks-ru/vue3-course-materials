@@ -24,9 +24,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useAuth } from '../composables/useAuth.js';
+import { useAuthContext } from '../composables/useAuth.js';
 
-const { login } = useAuth();
+const { login } = useAuthContext();
 
 const email = ref('demo@email');
 const password = ref('password');

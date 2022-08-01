@@ -1,12 +1,6 @@
 <template>
   <UiContainer class="page-meetup-form">
-    <MeetupForm
-      :meetup="meetup"
-      @setMeetupField="setMeetupField"
-      @addAgendaItem="addAgendaItem"
-      @removeAgendaItem="removeAgendaItem"
-      @setAgendaItemField="setAgendaItemField"
-    />
+    <MeetupForm />
     <hr />
     <button @click="updateMeetup">Update Meetup</button>
     <pre><code>{{ meetup }}</code></pre>
@@ -14,8 +8,10 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'pinia';
 import MeetupForm from './components/MeetupForm.vue';
 import UiContainer from './components/UiContainer.vue';
+import { useMeetupFormStore } from './stores/useMeetupFormStore.js';
 
 function createMeetup() {
   return {
@@ -37,34 +33,22 @@ export default {
     MeetupForm,
   },
 
-  data() {
-    return {
-      meetup: createMeetup(),
-    };
+  computed: {
+    ...mapState(useMeetupFormStore, ['meetup']),
+  },
+
+  created() {
+    this.setMeetup(createMeetup());
   },
 
   methods: {
+    ...mapActions(useMeetupFormStore, ['setMeetup']),
+
     updateMeetup() {
       this.meetup.title += '!';
       if (this.meetup.agenda.length) {
         this.meetup.agenda[0].title += '!';
       }
-    },
-
-    setMeetupField({ field, value }) {
-      this.meetup[field] = value;
-    },
-
-    addAgendaItem(newItem) {
-      this.meetup.agenda.push(newItem);
-    },
-
-    removeAgendaItem(index) {
-      this.meetup.agenda.splice(index, 1);
-    },
-
-    setAgendaItemField({ index, field, value }) {
-      this.meetup.agenda[index][field] = value;
     },
   },
 };

@@ -6,9 +6,9 @@
           <label class="form-group__label">Название</label>
           <div class="input-group">
             <input
-              v-model="localMeetup.title"
+              :value="meetup.title"
               class="form-control"
-              @change="setMeetupField('title', $event.target.value)"
+              @change="setMeetupField({ field: 'title', value: $event.target.value })"
             />
           </div>
         </div>
@@ -16,9 +16,9 @@
           <label class="form-group__label">Место проведения</label>
           <div class="input-group">
             <input
-              v-model="localMeetup.place"
+              :value="meetup.place"
               class="form-control"
-              @change="setMeetupField('place', $event.target.value)"
+              @change="setMeetupField({ field: 'place', value: $event.target.value })"
             />
           </div>
         </div>
@@ -26,16 +26,14 @@
 
       <h3 class="meetup-form__agenda-title">Программа</h3>
       <MeetupAgendaItemForm
-        v-for="(agendaItem, index) in localMeetup.agenda"
+        v-for="(agendaItem, index) in meetup.agenda"
         :key="agendaItem.id"
-        v-model:agendaItem="localMeetup.agenda[index]"
+        :index="index"
         class="meetup-form__agenda-item"
-        @setAgendaItemField="$emit('setAgendaItemField', { index, ...$event })"
-        @remove="removeAgendaItem(index)"
       />
 
       <div class="meetup-form__append">
-        <button class="meetup-form__append-button" type="button" @click="addAgendaItem">
+        <button class="meetup-form__append-button" type="button" @click="handleAddAgendaItem">
           + Добавить пункт программы
         </button>
       </div>
@@ -51,8 +49,9 @@
 </template>
 
 <script>
-import { klona } from 'klona';
 import MeetupAgendaItemForm from './MeetupAgendaItemForm.vue';
+import { mapActions, mapState } from 'pinia';
+import { useMeetupFormStore } from '../stores/useMeetupFormStore.js';
 
 // Use negative IDs, so it won't conflict with real id
 let lastId = -1;
@@ -76,43 +75,16 @@ export default {
     MeetupAgendaItemForm,
   },
 
-  props: {
-    meetup: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  emits: ['setMeetupField', 'addAgendaItem', 'removeAgendaItem', 'setAgendaItemField'],
-
-  data() {
-    return {
-      localMeetup: null,
-    };
-  },
-
-  watch: {
-    meetup: {
-      deep: true,
-      immediate: true,
-      handler() {
-        this.localMeetup = klona(this.meetup);
-      },
-    },
+  computed: {
+    ...mapState(useMeetupFormStore, ['meetup']),
   },
 
   methods: {
-    addAgendaItem() {
+    ...mapActions(useMeetupFormStore, ['addAgendaItem', 'setMeetupField', 'removeAgendaItem']),
+
+    handleAddAgendaItem() {
       const newItem = createAgendaItem();
-      this.$emit('addAgendaItem', newItem);
-    },
-
-    setMeetupField(field, value) {
-      this.$emit('setMeetupField', { field, value });
-    },
-
-    removeAgendaItem(index) {
-      this.$emit('removeAgendaItem', index);
+      this.addAgendaItem(newItem);
     },
   },
 };

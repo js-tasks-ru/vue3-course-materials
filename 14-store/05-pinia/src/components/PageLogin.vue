@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import { loginWithApi } from '../api.js';
+import { mapActions } from 'pinia';
+import { useAuthStore } from '../stores/useAuthStore.js';
 
 export default {
   name: 'PageLogin',
@@ -36,9 +37,13 @@ export default {
   },
 
   methods: {
+    ...mapActions(useAuthStore, ['login']),
+
     async handleSubmit() {
       try {
-        const user = await loginWithApi(this.email, this.password);
+        await this.login(this.email, this.password);
+        // await useAuthStore().login(this.email, this.password);
+        // await useAuthStore(this.$pinia).login(this.email, this.password);
       } catch (e) {
         alert(e);
       }
