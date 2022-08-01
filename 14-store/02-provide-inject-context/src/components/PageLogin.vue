@@ -26,6 +26,8 @@
 export default {
   name: 'PageLogin',
 
+  inject: ['login'],
+
   data() {
     return {
       email: 'demo@email',
@@ -34,7 +36,9 @@ export default {
   },
 
   methods: {
-    handleSubmit() {},
+    handleSubmit() {
+      this.login(this.email, this.password).catch((err) => alert(err.message));
+    },
   },
 };
 </script>

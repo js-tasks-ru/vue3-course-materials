@@ -22,22 +22,15 @@
   </form>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
+import { useAuth } from '../composables/useAuth.js';
 
-export default {
-  name: 'PageLogin',
+const { login } = useAuth();
 
-  setup() {
-    const email = ref('demo@email');
-    const password = ref('password');
-    const handleSubmit = () => {};
-
-    return {
-      email,
-      password,
-      handleSubmit,
-    };
-  },
+const email = ref('demo@email');
+const password = ref('password');
+const handleSubmit = () => {
+  login(email.value, password.value).catch((err) => alert(err.message));
 };
 </script>

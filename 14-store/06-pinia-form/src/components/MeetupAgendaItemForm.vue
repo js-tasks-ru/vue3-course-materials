@@ -1,11 +1,15 @@
 <template>
   <div class="agenda-item-form">
-    <button type="button" class="agenda-item-form__remove-button" @click="$emit('remove')">
+    <button type="button" class="agenda-item-form__remove-button" @click="removeAgendaItem(index)">
       <UiIcon icon="trash" />
     </button>
 
     <div class="form-group">
-      <select v-model="localAgendaItem.type" title="Тип" @change="setAgendaItemField('type', $event.target.value)">
+      <select
+        :value="agendaItem.type"
+        title="Тип"
+        @change="setAgendaItemField({ field: 'type', value: $event.target.value, index })"
+      >
         <option value="other">Другое</option>
       </select>
     </div>
@@ -16,11 +20,11 @@
           <label class="form-group__label">Начало</label>
           <div class="input-group">
             <input
-              v-model="localAgendaItem.startsAt"
+              :value="agendaItem.startsAt"
               class="form-control"
               type="time"
               placeholder="00:00"
-              @change="setAgendaItemField('startsAt', $event.target.value)"
+              @change="setAgendaItemField({ field: 'startsAt', value: $event.target.value, index })"
             />
           </div>
         </div>
@@ -30,11 +34,11 @@
           <label class="form-group__label">Окончание</label>
           <div class="input-group">
             <input
-              v-model="localAgendaItem.endsAt"
+              :value="agendaItem.endsAt"
               class="form-control"
               type="time"
               placeholder="00:00"
-              @change="setAgendaItemField('endsAt', $event.target.value)"
+              @change="setAgendaItemField({ field: 'endsAt', value: $event.target.value, index })"
             />
           </div>
         </div>
@@ -45,9 +49,9 @@
       <label class="form-group__label">Заголовок</label>
       <div class="input-group">
         <input
-          v-model="localAgendaItem.title"
+          :value="agendaItem.title"
           class="form-control"
-          @change="setAgendaItemField('title', $event.target.value)"
+          @change="setAgendaItemField({ field: 'title', value: $event.target.value, index })"
         />
       </div>
     </div>
@@ -55,9 +59,9 @@
       <label class="form-group__label">Описание</label>
       <div class="input-group">
         <textarea
-          v-model="localAgendaItem.description"
+          :value="agendaItem.description"
           class="form-control"
-          @change="setAgendaItemField('description', $event.target.value)"
+          @change="setAgendaItemField({ field: 'description', value: $event.target.value, index })"
         ></textarea>
       </div>
     </div>
@@ -66,6 +70,8 @@
 
 <script>
 import UiIcon from './UiIcon.vue';
+import { mapActions, mapState } from 'pinia';
+import { useMeetupFormStore } from '../stores/useMeetupFormStore.js';
 
 export default {
   name: 'MeetupAgendaItemForm',
@@ -75,24 +81,22 @@ export default {
   },
 
   props: {
-    agendaItem: {
-      type: Object,
+    index: {
+      type: Number,
       required: true,
     },
   },
 
-  emits: ['setAgendaItemField', 'remove'],
-
-  data() {
-    return {
-      localAgendaItem: { ...this.agendaItem },
-    };
+  computed: {
+    ...mapState(useMeetupFormStore, {
+      agendaItem(state) {
+        return state.meetup.agenda[this.index];
+      },
+    }),
   },
 
   methods: {
-    setAgendaItemField(field, value) {
-      this.$emit('setAgendaItemField', { field, value });
-    },
+    ...mapActions(useMeetupFormStore, ['setAgendaItemField', 'removeAgendaItem']),
   },
 };
 </script>

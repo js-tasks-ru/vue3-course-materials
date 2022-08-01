@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { loginWithApi } from '../api.js';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'PageLogin',
@@ -36,9 +36,14 @@ export default {
   },
 
   methods: {
+    ...mapActions('auth', {
+      login: 'LOGIN',
+    }),
+
     async handleSubmit() {
       try {
-        const user = await loginWithApi(this.email, this.password);
+        await this.login({ email: this.email, password: this.password });
+        // this.$store.dispatch('auth/LOGIN', { email: this.email, password: this.password })
       } catch (e) {
         alert(e);
       }
