@@ -1,0 +1,18 @@
+.form {
+  margin: 0;
+}
+
+.form__buttons {
+  display: flex;
+  flex-direction: column;
+  padding: 0 40px;
+  margin-top: 40px;
+}
+
+.form__append {
+  margin-top: 40px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+}
