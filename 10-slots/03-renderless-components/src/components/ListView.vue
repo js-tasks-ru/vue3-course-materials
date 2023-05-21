@@ -1,12 +1,12 @@
 <template>
-  <ul>
-    <li v-for="(item, index) in localItems">
-      <slot :item="item" :index="index" @remove="remove(index)">
+  <slot :items="localItems" @remove="remove">
+    <ul>
+      <li v-for="(item, index) in localItems">
         <span>{{ item }}</span>
         <button @click="remove(index)">x</button>
-      </slot>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </slot>
 </template>
 
 <script>
@@ -17,7 +17,9 @@ export default {
     items: Array,
   },
 
-  emits: ['update:items'],
+  emits: {
+    'update:items': null,
+  },
 
   data() {
     return {

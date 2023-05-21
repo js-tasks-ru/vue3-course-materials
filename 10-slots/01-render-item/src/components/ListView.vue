@@ -1,18 +1,18 @@
-<template>
-  <ul>
-    <li v-for="(item, index) in localItems">
-      <span>{{ item }}</span>
-      <button @click="remove(index)">x</button>
-    </li>
-  </ul>
-</template>
-
-<script>
+<script lang="jsx">
 export default {
   name: 'ListView',
 
   props: {
     items: Array,
+    renderItem: {
+      type: Function,
+      default: ({ item, index, remove }) => (
+        <>
+          <span>{item}</span>
+          <button onClick={() => remove(index)}>x</button>
+        </>
+      ),
+    },
   },
 
   emits: ['update:items'],
@@ -38,6 +38,22 @@ export default {
       this.localItems.splice(index, 1);
       this.$emit('update:items', [...this.localItems]);
     },
+  },
+
+  render() {
+    return (
+      <ul>
+        {this.localItems.map((item, index) => (
+          <li>
+            {this.renderItem({
+              item,
+              index,
+              remove: this.remove,
+            })}
+          </li>
+        ))}
+      </ul>
+    );
   },
 };
 </script>
