@@ -1,5 +1,5 @@
 <template>
-  <UiCard :cover="meetup.image" class="meetup-card">
+  <UiCard tag="article" :cover="meetup.image" class="meetup-card">
     <template #header>
       {{ meetup.title }}
     </template>

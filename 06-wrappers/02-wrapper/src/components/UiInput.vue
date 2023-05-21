@@ -1,15 +1,78 @@
 <template>
-  <div class="input-group">
-    <!--  <div class="input-group__icon"> -->
-    <!--    <slot name="left-icon" /> -->
-    <!--  </div> -->
-    <input class="form-control" />
+  <div
+    class="input-group"
+    :class="{
+      'input-group_icon': $slots['left-icon'],
+      'input-group_icon-left': $slots['left-icon'],
+    }"
+  >
+    <div v-if="$slots['left-icon']" class="input-group__icon">
+      <slot name="left-icon" />
+    </div>
+    <!--
+      v-bind="$attrs" позволяет пробросить все переданные параметры и обработчики событий,
+      которые не часть интерфейса компоненте (не описаны в props / emits),
+      пробросить на определённый элемент внутри компонента.
+      По умолчанию они наследуются корневым узлом.
+    -->
+    <input ref="input" v-model="modelProxy" v-bind="$attrs" class="form-control" :class="{ 'form-control_rounded': rounded }" />
+    <!-- Или вместо modelProxy: -->
+    <!-- :value="modelValue"-->
+    <!-- @input="$emit('update:modelValue', $event.target.value)"-->
   </div>
 </template>
 
 <script>
 export default {
   name: 'UiInput',
+
+  // Отключаем стандартное наследование атрибутов
+  // Иначе все атрибуты, которые мы вручную проксируем на input, будут дублироваться и на корневом div-е
+  inheritAttrs: false,
+
+  props: {
+    modelValue: {
+      type: String,
+    },
+
+    rounded: {
+      type: Boolean,
+    }
+  },
+
+  emits: {
+    'update:modelValue': null,
+  },
+
+  // По умолчанию (кроме SFC Setup) все свойства компонента публичны.
+  // Можно явно описать, какие публичны. Тогда остальные будут приватные.
+  expose: ['focus'],
+
+  computed: {
+    // Не работает. $slots - не реактивный
+    // hasIcon() {
+    //   return !!this.$slots['left-icon'];
+    // },
+
+    // Проксирование модели, позволяет v-model компонента напрямую связать с v-model оборачиваемого элемента
+    // Особенно полезно с элементами со сложной моделью, например, checkbox
+    modelProxy: {
+      get() {
+        return this.modelValue;
+      },
+
+      set(value) {
+        this.$emit('update:modelValue', value);
+      },
+    },
+  },
+
+  methods: {
+    // В редких случаях методы могут быть публичным интерфейсом компонента
+    focus() {
+      this.$refs['input'].focus();
+    },
+  },
 };
 </script>
 
