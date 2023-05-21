@@ -68,6 +68,66 @@ const App = defineComponent({
       </div>
     </fieldset>
 
+    <fieldset>
+      <legend>:key="index"</legend>
+      <div style="display: flex">
+        <fieldset>
+          <legend>No prop watch</legend>
+          <ListItem v-for="(item, index) in list" :item="item" :key="index" />
+        </fieldset>
+
+        <fieldset>
+          <legend>No prop watch deep</legend>
+          <ListItemWithCounterButton v-for="(item, index) in list" :name="item.value" :key="index" />
+        </fieldset>
+
+        <fieldset>
+          <legend>DOM without binding (input without :value)</legend>
+          <InputWithoutBinding v-for="(item, index) in list" :text="item.value" :key="index" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Complex update with DOM API (canvas)</legend>
+          <CanvasText v-for="(item, index) in list" :text="item.value" :key="index" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Slow prop update</legend>
+          <SlowListItem v-for="(item, index) in list" :item="item" :key="index" />
+        </fieldset>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Key</legend>
+      <div style="display: flex">
+        <fieldset>
+          <legend>No prop watch</legend>
+          <ListItem v-for="item in list" :item="item" :key="item.id" />
+        </fieldset>
+
+        <fieldset>
+          <legend>No prop watch deep</legend>
+          <ListItemWithCounterButton v-for="item in list" :name="item.value" :key="item.id" />
+        </fieldset>
+
+        <fieldset>
+          <legend>DOM without binding (input without :value)</legend>
+          <InputWithoutBinding v-for="item in list" :text="item.value" :key="item.id" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Complex update with DOM API (canvas)</legend>
+          <CanvasText v-for="item in list" :text="item.value" :key="item.id" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Slow prop update</legend>
+          <SlowListItem v-for="item in list" :item="item" :key="item.id" />
+        </fieldset>
+      </div>
+    </fieldset>
+
     <hr />
 
     <button type="button" @click="rotateList">Rotate List</button>

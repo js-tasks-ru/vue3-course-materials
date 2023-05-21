@@ -26,10 +26,10 @@
       </div>
     </div>
 
-    <template v-if="meetups">
+    <KeepAlive v-if="meetups" include="MeetupsCalendar">
       <component :is="viewComponent" v-if="filteredMeetups.length" :meetups="filteredMeetups" />
       <UiAlert v-else>Митапов по заданным условиям не найдено...</UiAlert>
-    </template>
+    </KeepAlive>
     <UiAlert v-else>Загрузка...</UiAlert>
   </UiContainer>
 </template>
