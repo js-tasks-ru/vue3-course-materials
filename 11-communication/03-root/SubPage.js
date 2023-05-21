@@ -11,7 +11,9 @@ export default defineComponent({
       this.$refs['localToaster'].toast('Toast');
     },
 
-    globalToast() {},
+    globalToast() {
+      this.$root.toast('Global Toast');
+    },
   },
 
   template: `
