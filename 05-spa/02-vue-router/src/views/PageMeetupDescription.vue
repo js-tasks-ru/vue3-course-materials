@@ -1,5 +1,5 @@
 <template>
-  <div>meetup-description</div>
+  <div>{{ meetup.description }}</div>
 </template>
 
 <script>

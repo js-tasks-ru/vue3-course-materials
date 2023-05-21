@@ -38,13 +38,13 @@
 </template>
 
 <script>
-import MeetupsList from './MeetupsList.vue';
-import MeetupsCalendar from './MeetupsCalendar.vue';
-import UiRadioGroup from './UiRadioGroup.vue';
-import UiButtonGroup from './UiButtonGroup.vue';
-import UiContainer from './UiContainer.vue';
-import UiAlert from './UiAlert.vue';
-import UiIcon from './UiIcon.vue';
+import MeetupsList from '../components/MeetupsList.vue';
+import MeetupsCalendar from '../components/MeetupsCalendar.vue';
+import UiRadioGroup from '../components/UiRadioGroup.vue';
+import UiButtonGroup from '../components/UiButtonGroup.vue';
+import UiContainer from '../components/UiContainer.vue';
+import UiAlert from '../components/UiAlert.vue';
+import UiIcon from '../components/UiIcon.vue';
 import { fetchMeetups } from '../api.js';
 
 export default {
