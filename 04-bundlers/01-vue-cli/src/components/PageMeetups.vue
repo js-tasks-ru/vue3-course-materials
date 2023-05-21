@@ -9,7 +9,7 @@
         <div class="form-group form-group_inline">
           <div class="input-group input-group_icon input-group_icon-left">
             <div class="input-group__icon">
-              <img class="icon" src="/assets/icons/icon-search.svg" />
+              <UiIcon icon="search" />
             </div>
 
             <input
@@ -44,6 +44,7 @@ import UiRadioGroup from '@/components/UiRadioGroup.vue';
 import UiButtonGroup from '@/components/UiButtonGroup.vue';
 import UiContainer from '@/components/UiContainer.vue';
 import UiAlert from '@/components/UiAlert.vue';
+import UiIcon from '@/components/UiIcon.vue';
 import { fetchMeetups } from '@/api';
 
 export default {
@@ -62,6 +63,7 @@ export default {
     UiButtonGroup,
     UiContainer,
     UiAlert,
+    UiIcon,
   },
 
   data() {

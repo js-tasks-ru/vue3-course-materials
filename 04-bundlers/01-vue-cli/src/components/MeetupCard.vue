@@ -9,15 +9,15 @@
       <UiBadge v-if="meetup.attending" type="primary" class="meetup-card__badge">Участвую</UiBadge>
       <ul class="meetup-info">
         <li class="meetup-info__item">
-          <img class="icon meetup-info__icon" src="/assets/icons/icon-user.svg" />
+          <UiIcon class="icon meetup-info__icon" icon="user" />
           {{ meetup.organizer }}
         </li>
         <li class="meetup-info__item">
-          <img class="icon meetup-info__icon" src="/assets/icons/icon-map.svg" />
+          <UiIcon class="icon meetup-info__icon" icon="map" />
           {{ meetup.place }}
         </li>
         <li class="meetup-info__item">
-          <img class="icon meetup-info__icon" src="/assets/icons/icon-cal-lg.svg" />
+          <UiIcon class="icon meetup-info__icon" icon="cal-lg" />
           <time :datetime="formatAsIsoDate(meetup.date)">{{ formatAsLocalDate(meetup.date) }}</time>
         </li>
       </ul>
@@ -28,6 +28,7 @@
 <script>
 import UiBadge from '@/components/UiBadge.vue';
 import UiCard from '@/components/UiCard.vue';
+import UiIcon from '@/components/UiIcon.vue';
 
 export default {
   name: 'MeetupsListItem',
@@ -35,6 +36,7 @@ export default {
   components: {
     UiBadge,
     UiCard,
+    UiIcon,
   },
 
   props: {
