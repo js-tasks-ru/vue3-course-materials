@@ -1,5 +1,5 @@
 <template>
-  <div>meetup-agenda</div>
+  <div>{{ meetup.agenda.length }}</div>
 </template>
 
 <script>
