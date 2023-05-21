@@ -1,6 +1,5 @@
 /** URL адрес API */
-export const API_URL = process.env.VUE_APP_API_URL;
-console.log(process.env);
+export const API_URL = import.meta.env.VITE_API_URL;
 
 /**
  * Получает список митапов с API

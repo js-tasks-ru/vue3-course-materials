@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style>
-@import '~@/assets/styles/_fonts.css';
-@import '~@/assets/styles/_variables.css';
-@import '~@/assets/styles/_common.css';
+@import '@/assets/styles/_fonts.css';
+@import '@/assets/styles/_variables.css';
+@import '@/assets/styles/_common.css';
 </style>
