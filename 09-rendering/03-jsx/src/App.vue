@@ -1,13 +1,10 @@
-<script>
-import { h } from 'vue';
+<script lang="jsx">
 import FieldsetComponent from './FieldsetComponent.vue';
 import TextDiv from './TextDiv.vue';
 import CounterButton from './CounterButton.vue';
 
 export default {
   name: 'App',
-
-  // Регистрация компонентов больше не нужна, компоненты используются напрямую в JS
 
   data() {
     return {
@@ -16,14 +13,9 @@ export default {
   },
 
   render() {
-    const counterButton = h(CounterButton, {
-      count: this.count,
-      'onUpdate:count': ($event) => {
-        this.count = $event;
-      },
-    });
+    const counterButton = <CounterButton vModel={[this.count, 'count']} />;
 
-    const content = [h(TextDiv), counterButton];
+    const content = [<TextDiv />, counterButton];
 
     // В компоненты содержимое лучше передать не срендеренным, а функциями рендеринга содержимого слота
     return h(FieldsetComponent, null, {
