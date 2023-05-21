@@ -11,12 +11,17 @@ export default defineComponent({
       this.$refs['localToaster'].toast('Toast');
     },
 
-    globalToast() {},
+    globalToast() {
+      this.$refs['teleportToaster'].toast();
+    },
   },
 
   template: `
     <div class="sub-page">
       <TheToaster ref="localToaster" />
+      <Teleport to="body">
+        <TheToaster ref="teleportToaster" />
+      </Teleport>
       <button @click="localToast">Local Toast</button>
       <button @click="globalToast">Global Toast</button>
     </div>`,

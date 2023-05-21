@@ -1,6 +1,7 @@
 import { defineComponent } from './vendor/vue.esm-browser.js';
 import IndexPage from './IndexPage.js';
 import TheToaster from './TheToaster.js';
+import { eventBus } from './eventBus.js';
 
 export default defineComponent({
   name: 'App',
@@ -10,7 +11,11 @@ export default defineComponent({
     TheToaster,
   },
 
-  expose: ['toast'],
+  mounted() {
+    eventBus.on('toaster:toast', (message) => {
+      this.toast(message);
+    });
+  },
 
   methods: {
     toast(message) {

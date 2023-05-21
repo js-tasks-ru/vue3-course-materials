@@ -1,6 +1,5 @@
 import { defineComponent } from './vendor/vue.esm-browser.js';
 import TheToaster from './TheToaster.js';
-import { toaster } from './toaster.js';
 
 export default defineComponent({
   name: 'SubPage',
@@ -13,7 +12,7 @@ export default defineComponent({
     },
 
     globalToast() {
-      toaster.toast('Toast');
+      this.$toaster.toast('Global Toast');
     },
   },
 

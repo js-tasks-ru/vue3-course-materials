@@ -20,8 +20,10 @@ export default defineComponent({
 
   template: `
     <div class="toaster">
-      <div v-if="message" class="toast toast_success">
-        <span>{{ message }}</span>
+      <div v-if="message !== null" class="toast toast_success">
+        <span>
+          <slot>{{ message }}</slot>
+        </span>
       </div>
     </div>`,
 });
