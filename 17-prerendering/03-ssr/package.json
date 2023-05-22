@@ -1,0 +1,22 @@
+{
+  "name": "03-ssr",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node server.js",
+    "dev": "cross-env NODE_ENV=development node server.js",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --outDir dist/server --ssr src/entry-server.js",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "isomorphic-fetch": "^3.0.0",
+    "vue": "^3.2.36"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.3",
+    "cross-env": "^7.0.3",
+    "vite": "^2.9.9"
+  }
+}

@@ -47,6 +47,8 @@ export default {
     },
   },
 
+  emits: ['update:view'],
+
   methods: {
     select(value) {
       this.$emit('update:view', value);

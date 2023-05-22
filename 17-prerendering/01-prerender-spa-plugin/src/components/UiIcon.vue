@@ -23,6 +23,20 @@ const icons = {
   user: require('@/assets/icons/icon-user.svg'),
 };
 
+// Альтернативное решение - использовать возможность Webpack и получить функцию для работы с локальными иконками
+// Такое решение сильно завязано на сборщике, усложняет переезд на другой сборщик и интеграцию с другими инструментами, например, тестирование
+
+/*
+
+// Функция импорта иконок из папки иконок
+const requireIcon = require.context('@/assets/icons', false, /icon-(.*)\.svg/);
+// Имена всех иконок по этой функции
+const iconNames = requireIcon.keys().map((iconPath) => iconPath.match(/icon-(.*)\.svg/)[1]);
+// Функция импорта иконки по имени (получения пути до файла после сборки)
+const requireIconByName = (icon) => iconNames.includes(icon) && requireIcon(`./icon-${icon}.svg`);
+
+*/
+
 export default {
   name: 'UiIcon',
 
