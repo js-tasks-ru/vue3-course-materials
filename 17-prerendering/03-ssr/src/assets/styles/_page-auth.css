@@ -1,0 +1,10 @@
+.page-auth {
+  max-width: 374px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 48px 0;
+}
+
+.page-auth__title {
+  text-align: center;
+}

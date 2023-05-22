@@ -2,20 +2,20 @@
   <ul class="meetups-list">
     <li v-for="meetup in meetups" :key="meetup.id" class="meetups-list__item">
       <a :href="`/meetups/${meetup.id}`" class="meetups-list__item-link" tabindex="0">
-        <meetups-list-item :meetup="meetup" />
+        <MeetupCard :meetup="meetup" />
       </a>
     </li>
   </ul>
 </template>
 
 <script>
-import MeetupsListItem from './MeetupsListItem';
+import MeetupCard from '@/components/MeetupCard.vue';
 
 export default {
   name: 'MeetupsList',
 
   components: {
-    MeetupsListItem,
+    MeetupCard,
   },
 
   props: {

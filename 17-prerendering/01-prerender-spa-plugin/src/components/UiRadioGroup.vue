@@ -34,6 +34,8 @@ export default {
       default: () => `radio-group`,
     },
   },
+
+  emits: ['update:modelValue'],
 };
 </script>
 

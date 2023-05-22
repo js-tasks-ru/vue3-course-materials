@@ -1,12 +1,19 @@
 <template>
   <div class="alert">
-    <slot>No data...</slot>
+    <slot>{{ text }}</slot>
   </div>
 </template>
 
 <script>
 export default {
   name: 'UiAlert',
+
+  props: {
+    text: {
+      type: String,
+      default: 'Error',
+    },
+  },
 };
 </script>
 
