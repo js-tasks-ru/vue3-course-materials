@@ -1,0 +1,23 @@
+.meetup-info {
+  margin: 0;
+  padding: 0;
+}
+
+.meetup-info li {
+  list-style-type: none;
+  position: relative;
+  padding-left: 36px;
+  font-size: 18px;
+  line-height: 28px;
+  margin: 0 0 8px;
+}
+
+.meetup-info li:last-child {
+  margin: 0;
+}
+
+.meetup-info__icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
