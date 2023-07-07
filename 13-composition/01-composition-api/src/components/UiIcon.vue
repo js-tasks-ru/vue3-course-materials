@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import AlertCircle from '../assets/icons/icon-alert-circle.svg';
 import CalSm from '../assets/icons/icon-cal-sm.svg';
 import CalLg from '../assets/icons/icon-cal-lg.svg';
@@ -52,10 +53,12 @@ export default {
     },
   },
 
-  computed: {
-    iconSrc() {
-      return icons[this.icon];
-    },
+  setup(props) {
+    const iconSrc = computed(() => icons[props.icon]);
+
+    return {
+      iconSrc,
+    };
   },
 };
 </script>

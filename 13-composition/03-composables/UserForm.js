@@ -1,8 +1,6 @@
-import { defineComponent, ref, toRefs, watch } from './vendor/vue.esm-browser.js';
+import { defineComponent, toRefs } from './vendor/vue.esm-browser.js';
 import UiInput from './UiInput.js';
-
-const deepEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
+import { useLocalProp } from './composables/useLocalProp.js';
 
 export default defineComponent({
   name: 'UserForm',
@@ -20,25 +18,8 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const { user } = toRefs(props);
-    const localUser = ref(null);
+    const localUser = useLocalProp(user, 'user', emit);
 
-    watch(
-      user,
-      () => {
-        if (!deepEqual(user.value, localUser.value)) {
-          localUser.value = deepClone(user.value);
-        }
-      },
-      { immediate: true, deep: true },
-    );
-
-    watch(
-      localUser,
-      () => {
-        emit(`update:user`, deepClone(localUser.value));
-      },
-      { deep: true },
-    );
     return {
       localUser,
     };

@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { computed } from 'vue';
+
 const badgeClasses = {
   primary: 'badge_primary',
   success: 'badge_success',
@@ -19,10 +21,12 @@ export default {
     },
   },
 
-  computed: {
-    badgeClass() {
-      return badgeClasses[this.type];
-    },
+  setup(props) {
+    const badgeClass = computed(() => badgeClasses[props.type]);
+
+    return {
+      badgeClass,
+    };
   },
 };
 </script>

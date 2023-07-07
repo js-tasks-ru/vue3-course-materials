@@ -1,4 +1,4 @@
-import { computed, toRefs } from './vendor/vue.esm-browser.js';
+import { toRefs } from './vendor/vue.esm-browser.js';
 import { defineComponent } from './vendor/vue.esm-browser.js';
 
 export default defineComponent({
@@ -11,15 +11,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { modelValue } = toRefs(props);
 
-    const modelValueProxy = computed({
-      get() {
-        return modelValue.value;
-      },
-
-      set(value) {
-        emit('update:modelValue', value);
-      },
-    });
+    const modelValueProxy = useModelProxy(modelValue, emit);
 
     return {
       modelValueProxy,

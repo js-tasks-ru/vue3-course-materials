@@ -49,10 +49,14 @@ export default {
 
   emits: ['update:view'],
 
-  methods: {
-    select(value) {
-      this.$emit('update:view', value);
-    },
+  setup(props, { emit }) {
+    const select = (value) => {
+      emit('update:view', value);
+    };
+
+    return {
+      select,
+    };
   },
 };
 </script>

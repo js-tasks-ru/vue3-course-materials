@@ -35,29 +35,19 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'UiButtonGroup',
-
-  props: {
-    view: {
-      type: String,
-      default: 'list',
-      validator: (value) => ['list', 'calendar'].includes(value),
-    },
+<script setup>
+const props = defineProps({
+  view: {
+    type: String,
+    default: 'list',
+    validator: (value) => ['list', 'calendar'].includes(value),
   },
+});
 
-  emits: ['update:view'],
+const emit = defineEmits(['update:view']);
 
-  setup(props, { emit }) {
-    const select = (value) => {
-      emit('update:view', value);
-    }
-
-    return {
-      select,
-    }
-  },
+const select = (value) => {
+  emit('update:view', value);
 };
 </script>
 

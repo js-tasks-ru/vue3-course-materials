@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { computed } from 'vue';
 import AlertCircle from '../assets/icons/icon-alert-circle.svg';
 import CalSm from '../assets/icons/icon-cal-sm.svg';
 import CalLg from '../assets/icons/icon-cal-lg.svg';
@@ -21,6 +20,7 @@ import Search from '../assets/icons/icon-search.svg';
 import Trash from '../assets/icons/icon-trash.svg';
 import Tv from '../assets/icons/icon-tv.svg';
 import User from '../assets/icons/icon-user.svg';
+import { computed } from 'vue';
 
 const icons = {
   'alert-circle': AlertCircle,

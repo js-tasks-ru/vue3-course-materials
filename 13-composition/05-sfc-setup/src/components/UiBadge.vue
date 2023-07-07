@@ -3,32 +3,23 @@
 </template>
 
 <script>
-import { computed } from 'vue';
-
 const badgeClasses = {
   primary: 'badge_primary',
   success: 'badge_success',
 };
+</script>
 
-export default {
-  name: 'UiBadge',
-
-  props: {
-    type: {
-      type: String,
-      required: false,
-      validator: (value) => Object.keys(badgeClasses).includes(value),
-    },
+<script setup>
+import { computed } from 'vue';
+const props = defineProps({
+  type: {
+    type: String,
+    required: false,
+    validator: (value) => Object.keys(badgeClasses).includes(value),
   },
+});
 
-  setup(props) {
-    const badgeClass = computed(() => badgeClasses[props.type]);
-
-    return {
-      badgeClass,
-    };
-  },
-};
+const badgeClass = computed(() => badgeClasses[props.type]);
 </script>
 
 <style scoped>

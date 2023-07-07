@@ -8,23 +8,15 @@
   </ul>
 </template>
 
-<script>
+<script setup>
 import MeetupCard from './MeetupCard.vue';
 
-export default {
-  name: 'MeetupsList',
-
-  components: {
-    MeetupCard,
+defineProps({
+  meetups: {
+    type: Array,
+    required: true,
   },
-
-  props: {
-    meetups: {
-      type: Array,
-      required: true,
-    },
-  },
-};
+});
 </script>
 
 <style scoped>

@@ -27,14 +27,14 @@
     </div>
 
     <KeepAlive v-if="meetups" include="MeetupsCalendar">
-      <component :is="viewComponent" v-if="filteredMeetups.length" :meetups="filteredMeetups" />
+      <ViewComponent v-if="filteredMeetups.length" :meetups="filteredMeetups" />
       <UiAlert v-else>Митапов по заданным условиям не найдено...</UiAlert>
     </KeepAlive>
     <UiAlert v-else>Загрузка...</UiAlert>
   </UiContainer>
 </template>
 
-<script>
+<script setup>
 import { computed, ref } from 'vue';
 import MeetupsList from './MeetupsList.vue';
 import MeetupsCalendar from './MeetupsCalendar.vue';
@@ -46,44 +46,22 @@ import UiIcon from './UiIcon.vue';
 import { useMeetupsFetch } from '../composables/useMeetupsFetch.js';
 import { useMeetupsFilter } from '../composables/useMeetupsFilter.js';
 
-export default {
-  name: 'PageMeetups',
+// Fetching
+const { meetups } = useMeetupsFetch();
+// Filtering
+const { filter, filteredMeetups, dateFilterOptions } = useMeetupsFilter(meetups);
 
-  components: {
-    UiIcon,
-    UiRadioGroup,
-    UiButtonGroup,
-    UiContainer,
-    UiAlert,
-  },
-
-  setup() {
-    // Fetching
-    const { meetups } = useMeetupsFetch();
-    // Filtering
-    const { filter, filteredMeetups, dateFilterOptions } = useMeetupsFilter(meetups);
-
-    // View
-    const view = ref('list');
-    const viewComponent = computed(() => {
-      const viewToComponents = {
-        list: MeetupsList,
-        calendar: MeetupsCalendar,
-      };
-      return viewToComponents[view.value];
-    });
-
-    // Result
-    return {
-      meetups,
-      filter,
-      filteredMeetups,
-      view,
-      viewComponent,
-      dateFilterOptions,
-    };
-  },
-};
+// View
+const view = ref('list');
+// Можно вычислить переменную с компонентом, и использовать её как имя тега,
+// даже без динамического компонента
+const ViewComponent = computed(() => {
+  const viewToComponents = {
+    list: MeetupsList,
+    calendar: MeetupsCalendar,
+  };
+  return viewToComponents[view.value];
+});
 </script>
 
 <style scoped>

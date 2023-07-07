@@ -1,4 +1,4 @@
-import { createApp } from '../../vendor/vue.esm-browser.js';
+import { createApp, inject } from '../../vendor/vue.esm-browser.js';
 import TheToaster from './TheToaster.js';
 
 export const TOASTER_KEY = Symbol('TOASTER_KEY');
@@ -14,4 +14,9 @@ export function createToaster({ container } = {}) {
     },
   };
   return toaster;
+}
+
+// С плагинами принято иметь composable для внедрения сущности по ключу плагина
+export function useToaster() {
+  return inject(TOASTER_KEY);
 }

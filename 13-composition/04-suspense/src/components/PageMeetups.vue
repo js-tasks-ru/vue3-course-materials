@@ -57,9 +57,9 @@ export default {
     UiAlert,
   },
 
-  setup() {
+  async setup() {
     // Fetching
-    const { meetups } = useMeetupsFetch();
+    const { meetups } = await useMeetupsFetch();
     // Filtering
     const { filter, filteredMeetups, dateFilterOptions } = useMeetupsFilter(meetups);
 

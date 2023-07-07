@@ -15,36 +15,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'UiRadioGroup',
-
-  props: {
-    options: {
-      type: Array,
-      required: true,
-    },
-
-    modelValue: {
-      type: String,
-    },
-
-    name: {
-      type: String,
-      default: () => `radio-group`,
-    },
+<script setup>
+const props = defineProps({
+  options: {
+    type: Array,
+    required: true,
   },
 
-  emits: ['update:modelValue'],
-
-  setup(props, { emit }) {
-    const change = (value) => emit('update:modelValue', value);
-
-    return {
-      change,
-    };
+  modelValue: {
+    type: String,
   },
-};
+
+  name: {
+    type: String,
+    default: () => `radio-group`,
+  },
+});
+
+const emit = defineEmits(['update:modelValue']);
+
+const change = (value) => emit('update:modelValue', value);
 </script>
 
 <style scoped>

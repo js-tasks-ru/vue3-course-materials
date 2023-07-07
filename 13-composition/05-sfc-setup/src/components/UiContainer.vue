@@ -4,11 +4,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'UiContainer',
-};
-</script>
+<script setup></script>
 
 <style scoped>
 .container {

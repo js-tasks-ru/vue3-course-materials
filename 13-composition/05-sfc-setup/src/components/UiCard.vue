@@ -15,36 +15,26 @@
   </component>
 </template>
 
-<script>
+<script setup>
 import { computed } from 'vue';
 
-export default {
-  name: 'UiCard',
-
-  props: {
-    tag: {
-      type: [String, Object],
-      default: 'div',
-    },
-
-    cover: {
-      type: String,
-    },
-
-    badge: {
-      type: String,
-      required: false,
-    },
+const props = defineProps({
+  tag: {
+    type: [String, Object],
+    default: 'div',
   },
 
-  setup(props) {
-    const coverStyle = computed(() => (props.cover ? `url('${props.cover}')` : `var(--default-cover)`));
-
-    return {
-      coverStyle,
-    };
+  cover: {
+    type: String,
   },
-};
+
+  badge: {
+    type: String,
+    required: false,
+  },
+});
+
+const coverStyle = computed(() => (props.cover ? `url('${props.cover}')` : `var(--default-cover)`));
 </script>
 
 <style scoped>

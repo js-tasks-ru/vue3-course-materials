@@ -52,11 +52,11 @@ export default {
   setup(props, { emit }) {
     const select = (value) => {
       emit('update:view', value);
-    }
+    };
 
     return {
       select,
-    }
+    };
   },
 };
 </script>

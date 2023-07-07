@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { computed } from 'vue';
+
 export default {
   name: 'UiCard',
 
@@ -35,10 +37,12 @@ export default {
     },
   },
 
-  computed: {
-    coverStyle() {
-      return this.cover ? `url('${this.cover}')` : `var(--default-cover)`;
-    },
+  setup(props) {
+    const coverStyle = computed(() => (props.cover ? `url('${props.cover}')` : `var(--default-cover)`));
+
+    return {
+      coverStyle,
+    };
   },
 };
 </script>

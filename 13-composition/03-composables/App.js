@@ -1,9 +1,10 @@
-import { defineComponent, inject, onBeforeUnmount, onMounted, ref, watch } from './vendor/vue.esm-browser.js';
+import { defineComponent, ref } from './vendor/vue.esm-browser.js';
 import UserForm from './UserForm.js';
-import { TOASTER_KEY } from './plugins/toaster/index.js';
+import { useToaster } from './plugins/toaster/index.js';
 import { formatAsIsoDate, formatAsLocalDate } from './utils/dateFormatters.js';
 import { isMobile } from './utils/isMobile.js';
-import { throttle } from './utils/throttle.js';
+import { throttledRef } from './composables/throttledRef.js';
+import { useResizeObserver } from './composables/useResizeObserver.js';
 
 export default defineComponent({
   name: 'App',
@@ -20,41 +21,19 @@ export default defineComponent({
       lastName: 'lastName',
     });
 
-    // Inject toaster + submit
-    const toaster = inject(TOASTER_KEY);
-
+    // Submit
+    const toaster = useToaster();
     const handleSubmit = () => {
       toaster.toast(user.value);
     };
 
     // Resize Observer
-    const width = ref(undefined);
-    const height = ref(undefined);
-    // For Template Ref
     const container = ref(null);
-    // Реактивность не нужна, просто внутренняя переменная
-    let observer = null;
-
-    onMounted(() => {
-      observer = new ResizeObserver(() => {
-        width.value = container.value.clientWidth;
-        height.value = container.value.clientHeight;
-      });
-      observer.observe(container.value);
-    });
-
-    onBeforeUnmount(() => {
-      observer.unobserve(container.value);
-    });
+    const { width, height } = useResizeObserver(container);
 
     // Throttling
-
-    const throttledWidth = ref(undefined);
-    const throttledHeight = ref(undefined);
-    const throttledSetWidth = throttle((value) => (throttledWidth.value = value), 1000);
-    const throttledSetHeight = throttle((value) => (throttledHeight.value = value), 1000);
-    watch(width, throttledSetWidth);
-    watch(height, throttledSetHeight);
+    const throttledWidth = throttledRef(width);
+    const throttledHeight = throttledRef(height);
 
     return {
       // Константа

@@ -37,10 +37,12 @@ export default {
 
   emits: ['update:modelValue'],
 
-  methods: {
-    change(value) {
-      this.$emit('update:modelValue', value);
-    },
+  setup(props, { emit }) {
+    const change = (value) => emit('update:modelValue', value);
+
+    return {
+      change,
+    };
   },
 };
 </script>

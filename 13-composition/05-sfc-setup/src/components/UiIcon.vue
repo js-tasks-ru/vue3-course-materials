@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { computed } from 'vue';
 import AlertCircle from '../assets/icons/icon-alert-circle.svg';
 import CalSm from '../assets/icons/icon-cal-sm.svg';
 import CalLg from '../assets/icons/icon-cal-lg.svg';
@@ -41,26 +40,20 @@ const icons = {
   tv: Tv,
   user: User,
 };
+</script>
 
-export default {
-  name: 'UiIcon',
+<script setup>
+import { computed } from 'vue';
 
-  props: {
-    icon: {
-      type: String,
-      required: true,
-      validator: (name) => Object.keys(icons).includes(name),
-    },
+const props = defineProps({
+  icon: {
+    type: String,
+    required: true,
+    validator: (name) => Object.keys(icons).includes(name),
   },
+});
 
-  setup(props) {
-    const iconSrc = computed(() => icons[props.icon]);
-
-    return {
-      iconSrc,
-    };
-  },
-};
+const iconSrc = computed(() => icons[props.icon]);
 </script>
 
 <style scoped>

@@ -25,45 +25,30 @@
   </UiCard>
 </template>
 
-<script>
+<script setup>
 import { computed } from 'vue';
 import UiBadge from './UiBadge.vue';
 import UiCard from './UiCard.vue';
 import UiIcon from './UiIcon.vue';
 
-export default {
-  name: 'MeetupCard',
-
-  components: {
-    UiBadge,
-    UiCard,
-    UiIcon,
-  },
-
+const props = defineProps({
   props: {
     meetup: {
       type: Object,
       required: true,
     },
   },
+});
 
-  setup(props) {
-    const isoDate = computed(() => new Date(props.meetup.date).toISOString().split('T')[0]);
+const isoDate = computed(() => new Date(props.meetup.date).toISOString().split('T')[0]);
 
-    const localDate = computed(() =>
-      new Date(props.meetup.date).toLocaleString(navigator.language, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
-    );
-
-    return {
-      isoDate,
-      localDate,
-    };
-  },
-};
+const localDate = computed(() =>
+  new Date(props.meetup.date).toLocaleString(navigator.language, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }),
+);
 </script>
 
 <style scoped>

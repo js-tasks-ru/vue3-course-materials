@@ -4,17 +4,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'UiAlert',
-
-  props: {
-    text: {
-      type: String,
-      default: 'No data...',
-    },
+<script setup>
+defineProps({
+  text: {
+    type: String,
+    default: 'No data...',
   },
-};
+});
 </script>
 
 <style scoped>
