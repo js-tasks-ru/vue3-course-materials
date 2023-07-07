@@ -17,6 +17,8 @@ export default {
   methods: {
     toast() {
       this.toaster.toast('Toast');
+      // this.$toaster.toast('Toast 2');
+      // this.toast('Toast 3');
     },
   },
 };
