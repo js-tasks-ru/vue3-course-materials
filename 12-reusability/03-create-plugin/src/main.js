@@ -1,9 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import { ToasterPlugin } from './plugins/toaster/index.js';
+import { toaster } from './toaster.js';
 
-createApp(App)
-  .use(ToasterPlugin, {
-    container: '#toaster',
-  })
-  .mount('#app');
+// Устанавливаем тостер как плагин для внедрения его в приложение
+createApp(App).use(toaster).mount('#app');

@@ -42,7 +42,8 @@ import UiButtonGroup from './UiButtonGroup.vue';
 import UiContainer from './UiContainer.vue';
 import UiAlert from './UiAlert.vue';
 import UiIcon from './UiIcon.vue';
-import { fetchMeetups } from '../api';
+import { pageMeetupsFetch } from '../mixins/pageMeetupsFetch.js'
+import { pageMeetupsFilter } from '../mixins/pageMeetupsFilter.js'
 
 export default {
   name: 'PageMeetups',
@@ -61,45 +62,25 @@ export default {
     UiAlert,
   },
 
+  mixins: [
+    // Добавляет
+    // - meetups
+    pageMeetupsFetch,
+    // Добавляет
+    // - filter
+    // - filteredMeetups
+    // Использует
+    // - meetups
+    pageMeetupsFilter,
+  ],
+
   data() {
     return {
-      meetups: null,
-
-      filter: {
-        date: 'all',
-        participation: 'all',
-        search: '',
-      },
-
       view: 'list',
     };
   },
 
   computed: {
-    filteredMeetups() {
-      if (!this.meetups) {
-        return null;
-      }
-
-      const dateFilter = (meetup) =>
-        this.filter.date === 'all' ||
-        (this.filter.date === 'past' && new Date(meetup.date) <= new Date()) ||
-        (this.filter.date === 'future' && new Date(meetup.date) > new Date());
-
-      const participationFilter = (meetup) =>
-        this.filter.participation === 'all' ||
-        (this.filter.participation === 'organizing' && meetup.organizing) ||
-        (this.filter.participation === 'attending' && meetup.attending);
-
-      const searchFilter = (meetup) =>
-        [meetup.title, meetup.description, meetup.place, meetup.organizer]
-          .join(' ')
-          .toLowerCase()
-          .includes(this.filter.search.toLowerCase());
-
-      return this.meetups.filter((meetup) => dateFilter(meetup) && participationFilter(meetup) && searchFilter(meetup));
-    },
-
     viewComponent() {
       const viewToComponents = {
         list: MeetupsList,
@@ -107,12 +88,6 @@ export default {
       };
       return viewToComponents[this.view];
     },
-  },
-
-  mounted() {
-    fetchMeetups().then((meetups) => {
-      this.meetups = meetups;
-    });
   },
 };
 </script>

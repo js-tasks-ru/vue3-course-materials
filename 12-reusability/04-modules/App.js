@@ -2,9 +2,13 @@ import { defineComponent } from './vendor/vue.esm-browser.js';
 import UserForm from './UserForm.js';
 import { TOASTER_KEY } from './plugins/toaster/index.js';
 import { throttle } from './utils/throttle.js';
+import { isMobile } from './utils/isMobile.js'
+import { formatAsIsoDate, formatAsLocalDate } from './utils/dateFormatters.js'
 
 export default defineComponent({
   name: 'App',
+
+  isMobile,
 
   components: { UserForm },
 
@@ -31,11 +35,6 @@ export default defineComponent({
   },
 
   computed: {
-    isMobile() {
-      const mobileUserAgents = /Android|iPhone|iPad/i;
-      return !!navigator.userAgent.match(mobileUserAgents);
-    },
-
     throttledSetWidth() {
       return throttle((value) => (this.throttledWidth = value), 1000);
     },
@@ -68,17 +67,9 @@ export default defineComponent({
   },
 
   methods: {
-    formatAsLocalDate(timestamp) {
-      return new Date(timestamp).toLocaleDateString(navigator.language, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-    },
-
-    formatAsIsoDate(timestamp) {
-      return new Date(timestamp).toISOString().substring(0, 10);
-    },
+    // Добавляем утилиты в методы для доступа к ним из шаблона
+    formatAsLocalDate,
+    formatAsIsoDate,
 
     handleSubmit() {
       this.toaster.toast(this.user);
@@ -89,7 +80,7 @@ export default defineComponent({
     <div ref="container" class="container">
       <p>Current time: <time :datetime="formatAsIsoDate(date)">{{ formatAsLocalDate(date) }}</time></p>
       <p>Container size: {{ throttledWidth }} x {{ throttledHeight }}</p>
-      <p>Is mobile? {{ isMobile }}</p>
+      <p>Is mobile? {{ $options.isMobile }}</p>
       <UserForm v-model:user="user" @submit.prevent="handleSubmit" />
 
       <pre>{{ user }}</pre>
