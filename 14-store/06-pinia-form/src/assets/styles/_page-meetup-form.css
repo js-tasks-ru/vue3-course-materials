@@ -1,0 +1,9 @@
+.page-meetup-form {
+  padding: 70px 0;
+}
+
+@media all and (max-width: 992px) {
+  .page-meetup-form {
+    padding: 48px 0;
+  }
+}
